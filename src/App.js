@@ -12,8 +12,8 @@ const useAuth = () => {
   return context;
 };
 
-// API Base URL - Update this to your Django backend URL
-const API_BASE_URL = 'http://localhost:8000';
+// API Base URL - Load from environment variables
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000';
 
 // API Service
 const api = {
