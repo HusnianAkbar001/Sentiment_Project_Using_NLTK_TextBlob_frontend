@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext, useContext } from 'react';
+import React, { useState, useEffect, createContext, useContext, useCallback } from 'react';
 import { AlertCircle, User, Lock, MessageSquare, Trash2, LogOut, BarChart3, Users, Shield } from 'lucide-react';
 
 // Auth Context
@@ -358,14 +358,14 @@ const SentimentAnalyzer = () => {
     }
   };
 
-  const fetchHistory = async () => {
+  const fetchHistory = useCallback(async () => {
     try {
       const response = await api.getSentimentHistory(token);
       setHistory(response.results || []);
     } catch (err) {
       console.error('History fetch error:', err);
     }
-  };
+  }, [token]);
 
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this analysis?')) return;
@@ -380,7 +380,7 @@ const SentimentAnalyzer = () => {
 
   useEffect(() => {
     fetchHistory();
-  }, []);
+  }, [fetchHistory]);
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-8">
